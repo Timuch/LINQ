@@ -11,7 +11,7 @@ namespace LINQ
         static void Main()
         {
             Console.WriteLine("     Employees:");
-            foreach(var a in Employee.GetEmployeesList())
+            foreach (var a in Employee.GetEmployeesList())
             {
                 a.Print();
             }
@@ -20,21 +20,24 @@ namespace LINQ
             foreach (var a in EmployeeOptionEntry.GetEmployeeOptionEntries())
             {
                 a.Print();
-            }        
-            
-            WhereGame();
-            SelectGame();
-            SelectManygame();
-            OrderByGame();
+            }
+
+            Where();
+            Select();
+            SelectMany();
+            OrderBy();
+            ThenBy();
+            Join();
+            GroupJoin();
             Console.ReadKey();
         }
 
-        private static void WhereGame()
+        private static void Where()
         {
             Console.WriteLine("     WhereGame");
 
             Console.WriteLine("     Employees where firstname.lenth > 5:");
-            foreach(var a in Employee.GetEmployeesList().Where(e => e.firstName.Length > 5))
+            foreach (var a in Employee.GetEmployeesList().Where(e => e.firstName.Length > 5))
             {
                 a.Print();
             }
@@ -49,15 +52,15 @@ namespace LINQ
             foreach (var a in Employee.GetEmployeesList().Where((e, i) => e.firstName.Length > 5 && i % 2 == 0))
             {
                 a.Print();
-            }            
-        }       
-        
-        private static void SelectGame()
+            }
+        }
+
+        private static void Select()
         {
             Console.WriteLine("     Selectgame");
 
             Console.WriteLine("     Employee's firstName:");
-            foreach(var a in Employee.GetEmployeesList().Select(e => e.firstName))
+            foreach (var a in Employee.GetEmployeesList().Select(e => e.firstName))
             {
                 Console.WriteLine(a);
             }
@@ -69,18 +72,18 @@ namespace LINQ
             }
 
             Console.WriteLine("     Employee's indexes:");
-            foreach(var e in Employee.GetEmployeesList().Select((e, i) => new { employee = e, index = i }))
+            foreach (var e in Employee.GetEmployeesList().Select((e, i) => new { employee = e, index = i }))
             {
                 Console.WriteLine(e);
             }
         }
 
-        private static void SelectManygame()
+        private static void SelectMany()
         {
             Console.WriteLine("     SelectManyGame");
 
             Console.WriteLine("     Employee's chars");
-            foreach(var a in Employee.GetEmployeesList().SelectMany(e => e.firstName.ToArray()))
+            foreach (var a in Employee.GetEmployeesList().SelectMany(e => e.firstName.ToArray()))
             {
                 Console.WriteLine(a);
             }
@@ -88,24 +91,24 @@ namespace LINQ
             Console.WriteLine("     Employee's optionEntries count:");
             var employees = Employee.GetEmployeesList();
             var employeesOptionEntries = EmployeeOptionEntry.GetEmployeeOptionEntries();
-            foreach(var a in employees.SelectMany(e => employeesOptionEntries.Where(eo => eo.id == e.id).Select(eo => new { eo.id, count = eo.optionsCount })))
+            foreach (var a in employees.SelectMany(e => employeesOptionEntries.Where(eo => eo.id == e.id).Select(eo => new { eo.id, count = eo.optionsCount })))
             {
                 Console.WriteLine(a);
             }
         }
 
-        private static void OrderByGame()
+        private static void OrderBy()
         {
             Console.WriteLine("     OrderByGame");
 
             Console.WriteLine("     Ordered by LastName");
-            foreach(var a in Employee.GetEmployeesList().OrderBy(e => e.lastName))
+            foreach (var a in Employee.GetEmployeesList().OrderBy(e => e.lastName))
             {
                 a.Print();
             }
 
             Console.WriteLine("     Ordered by firstName length by custom comparer");
-            foreach(var a in Employee.GetEmployeesList().OrderBy((e => e.firstName), new CustomStringComparer()))
+            foreach (var a in Employee.GetEmployeesList().OrderBy((e => e.firstName), new CustomStringComparer()))
             {
                 a.Print();
             }
@@ -114,8 +117,11 @@ namespace LINQ
             foreach (var a in Employee.GetEmployeesList().OrderByDescending((e => e.firstName), new CustomStringComparer()))
             {
                 a.Print();
-            }
+            }            
+        }
 
+        private static void ThenBy()
+        {
             Console.WriteLine("     Ordered by firstName length by custom comparer, then ordered by lastname length by custom comparer");
             foreach (var a in Employee.GetEmployeesList().OrderBy((e => e.firstName), new CustomStringComparer()).ThenBy((e => e.lastName), new CustomStringComparer()))
             {
@@ -126,6 +132,28 @@ namespace LINQ
             foreach (var a in Employee.GetEmployeesList().OrderBy((e => e.firstName), new CustomStringComparer()).ThenByDescending((e => e.lastName), new CustomStringComparer()))
             {
                 a.Print();
+            }
+        }
+
+        private static void Join()
+        {
+            Console.WriteLine("     Employees joins employeeOptionEntries");
+            var employees = Employee.GetEmployeesList();
+            var employeesOptionEntries = EmployeeOptionEntry.GetEmployeeOptionEntries();
+            foreach (var a in employees.Join(employeesOptionEntries, e => e.id, o => o.id, (e, o) => new {e, o.optionsCount }))
+            {
+                Console.WriteLine(a);
+            }
+        }
+
+        private static void GroupJoin()
+        {
+            Console.WriteLine("     Employees groupJoins employeeOptionEntries");
+            var employees = Employee.GetEmployeesList();
+            var employeesOptionEntries = EmployeeOptionEntry.GetEmployeeOptionEntries();
+            foreach (var a in employees.GroupJoin(employeesOptionEntries, e => e.id, o => o.id, (e, o) => new {e, options = o.Sum(os => os.optionsCount) }))
+            {
+                Console.WriteLine(a);
             }
         }
     }
