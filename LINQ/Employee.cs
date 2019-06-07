@@ -28,7 +28,12 @@ namespace LINQ
 
         public void Print()
         {
-            Console.WriteLine(ToString());
+            Print(null);
+        }
+
+        public void Print(string addString)
+        {
+            Console.WriteLine(ToString() + addString);
         }
 
         public override string ToString()
