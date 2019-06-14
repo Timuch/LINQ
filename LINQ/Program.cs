@@ -33,6 +33,8 @@ namespace LINQ
             Join();
             GroupJoin();
             GroupBy();
+            ToDictionary();
+            ToLookup();
             Console.ReadKey();
         }
 
@@ -211,6 +213,60 @@ namespace LINQ
                 foreach(var date in group.OrderBy(x => x))
                 {
                     Console.WriteLine(date);
+                }
+            }
+        }
+
+        private static void ToDictionary()
+        {
+            Console.WriteLine("     ToDictionary");
+
+            Console.WriteLine("     Employees in dictionary, key is id:");
+            foreach (var employee in employees.ToDictionary(e => e.id))
+            {
+                Console.WriteLine($"Key {employee.Key.ToString().PadRight(10)} Value {employee.Value}");
+            }
+
+            Console.WriteLine("     Employees in dictionary, key is id, firstname is selector:");
+            foreach (var employee in employees.ToDictionary(e => e.id, e => e.firstName))
+            {
+                Console.WriteLine($"Key {employee.Key.ToString().PadRight(10)} Value {employee.Value}");
+            }   
+        }
+
+        private static void ToLookup()
+        {
+            Console.WriteLine("     ToLookup");
+
+            Console.WriteLine("     Employees in lookup, key is id:");
+            foreach (var employeeGroup in employees.ToLookup(e => e.id))
+            {
+                foreach (var employee in employeeGroup)
+                {
+                    Console.WriteLine($"Key {employeeGroup.Key.ToString().PadRight(10)} Value {employee}");
+                }                
+            }
+
+            Console.WriteLine("     Employees in lookup, key is id, firstname is selector:");
+            foreach (var employeeGroup in employees.ToLookup(e => e.id, e => e.firstName))
+            {
+                foreach (var employee in employeeGroup)
+                {
+                    Console.WriteLine($"Key {employeeGroup.Key.ToString().PadRight(10)} Value {employee}");
+                }
+            }
+
+            Console.WriteLine("     Employees in lookup, key is firstName, lastName is selector, String length compare:");
+            foreach (var employeeGroup in employees.ToLookup(e => e.firstName, e => e.lastName, new StringLengthEqualityComparer()))
+            {
+                if (StringLengthEqualityComparer.IsSmall(employeeGroup.Key))
+                    Console.WriteLine($"    Small first name length:");
+                else
+                    Console.WriteLine($"    Big first name length:");
+
+                foreach (var employee in employeeGroup)
+                {
+                    Console.WriteLine($"Key {employeeGroup.Key.ToString().PadRight(10)} Value {employee}");
                 }
             }
         }

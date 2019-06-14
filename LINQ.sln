@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ", "LINQ\LINQ.csproj", "{A7DB3254-6CA1-4719-8AE5-8C75D1C86BEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToObjects", "LINQ\LinqToObjects.csproj", "{A7DB3254-6CA1-4719-8AE5-8C75D1C86BEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
