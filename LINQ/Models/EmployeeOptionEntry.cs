@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LINQ
+namespace LINQ.Models
 {
-    public class EmployeeOptionEntry
+    internal sealed class EmployeeOptionEntry
     {
         public int id;
         public long optionsCount;

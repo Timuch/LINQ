@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQ
+namespace LINQ.Comparers
 {
-    internal class StringLengthEqualityComparer : IEqualityComparer<string>
+    internal sealed class StringLengthEqualityComparer : IEqualityComparer<string>
     {
         public bool Equals(string x, string y)
         {

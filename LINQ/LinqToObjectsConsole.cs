@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LINQ.Comparers;
+using LINQ.Models;
 
 namespace LINQ
 {
-    class Program
+    sealed class LinqToObjectsConsole
     {
         static readonly List<Employee> employees = Employee.GetEmployeesList();
         static readonly List<EmployeeOptionEntry> employeesOptionEntries = EmployeeOptionEntry.GetEmployeeOptionEntries();
@@ -19,7 +21,7 @@ namespace LINQ
                 a.Print();
             }
 
-            Console.WriteLine("     EmployeesEntries:");
+            Console.WriteLine("\n     EmployeesEntries:");
             foreach (var a in employeesOptionEntries)
             {
                 a.Print();
@@ -40,7 +42,7 @@ namespace LINQ
 
         private static void Where()
         {
-            Console.WriteLine("     Where");
+            Console.WriteLine("\n     Where");
 
             Console.WriteLine("     Employees where firstname.lenth > 5:");
             foreach (var a in employees.Where(e => e.firstName.Length > 5))
@@ -63,7 +65,7 @@ namespace LINQ
 
         private static void Select()
         {
-            Console.WriteLine("     Select");
+            Console.WriteLine("\n     Select");
 
             Console.WriteLine("     Employee's firstName:");
             foreach (var a in employees.Select(e => e.firstName))
@@ -86,7 +88,7 @@ namespace LINQ
 
         private static void SelectMany()
         {
-            Console.WriteLine("     SelectMany");
+            Console.WriteLine("\n     SelectMany");
 
             Console.WriteLine("     Employee's chars");
             foreach (var a in employees.SelectMany(e => e.firstName.ToArray()))
@@ -103,7 +105,7 @@ namespace LINQ
 
         private static void OrderBy()
         {
-            Console.WriteLine("     OrderBy");
+            Console.WriteLine("\n     OrderBy");
 
             Console.WriteLine("     Ordered by LastName");
             foreach (var a in employees.OrderBy(e => e.lastName))
@@ -126,7 +128,7 @@ namespace LINQ
 
         private static void ThenBy()
         {
-            Console.WriteLine("     ThenBy");
+            Console.WriteLine("\n     ThenBy");
 
             Console.WriteLine("     Ordered by firstName length by custom comparer, then ordered by lastname length by custom comparer");
             foreach (var a in employees.OrderBy((e => e.firstName), new StringLenthComparer()).ThenBy((e => e.lastName), new StringLenthComparer()))
@@ -143,7 +145,7 @@ namespace LINQ
 
         private static void Join()
         {
-            Console.WriteLine("     Join");
+            Console.WriteLine("\n     Join");
 
             Console.WriteLine("     Employees joins employeeOptionEntries");
             foreach (var a in employees.Join(employeesOptionEntries, e => e.id, o => o.id, (e, o) => new {e, o.optionsCount }))
@@ -154,7 +156,7 @@ namespace LINQ
 
         private static void GroupJoin()
         {
-            Console.WriteLine("     GroupJoin");
+            Console.WriteLine("\n     GroupJoin");
 
             Console.WriteLine("     Employees groupJoins employeeOptionEntries");            
             foreach (var a in employees.GroupJoin(employeesOptionEntries, e => e.id, o => o.id, (e, o) => new {e, options = o.Sum(os => os.optionsCount) }))
@@ -165,7 +167,7 @@ namespace LINQ
 
         private static void GroupBy()
         {
-            Console.WriteLine("     GroupBy");
+            Console.WriteLine("\n     GroupBy");
 
             Console.WriteLine("     Entries grouped by id");
             foreach (var entrieGroup in employeesOptionEntries.GroupBy(e => e.id))
@@ -219,7 +221,7 @@ namespace LINQ
 
         private static void ToDictionary()
         {
-            Console.WriteLine("     ToDictionary");
+            Console.WriteLine("\n     ToDictionary");
 
             Console.WriteLine("     Employees in dictionary, key is id:");
             foreach (var employee in employees.ToDictionary(e => e.id))
@@ -236,7 +238,7 @@ namespace LINQ
 
         private static void ToLookup()
         {
-            Console.WriteLine("     ToLookup");
+            Console.WriteLine("\n     ToLookup");
 
             Console.WriteLine("     Employees in lookup, key is id:");
             foreach (var employeeGroup in employees.ToLookup(e => e.id))

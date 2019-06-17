@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQ
+namespace LINQ.Comparers
 {
-    internal class StringLenthComparer : IComparer<string> 
+    internal sealed class StringLenthComparer : IComparer<string> 
     {
         public int Compare(string x, string y)
         {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQ
+namespace LINQ.Models
 {
-    public class Employee
+    internal sealed class Employee
     {
         public int id;
         public string firstName;
