@@ -1,4 +1,5 @@
-﻿using LinqToXML.Models;
+﻿using LinqToXML.Handlers;
+using LinqToXML.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace LinqToXML
             CreateExampleXml();
             CreateHalloweenProblem();
             LinqGenerationXml();
+            ViewExampleDocument();
+            EventHandlersExample();
 
             Console.ReadKey();
         }
@@ -85,6 +88,24 @@ namespace LinqToXML
                            new XElement("LastName", p.LastName))));
 
             Console.WriteLine(xParticipants);
+        }
+
+        private static void ViewExampleDocument()
+        {
+            Console.WriteLine("\n   Example document:");
+            Console.WriteLine(ExampleDocument.xDocument);            
+        }
+
+        private static void EventHandlersExample()
+        {
+            Console.WriteLine("\n   Event handlers example:");
+
+            ExampleDocument.firstParticipant.Changing += new EventHandler<XObjectChangeEventArgs>(XObjectEventHandlers.MyChangingEventHandler);
+            ExampleDocument.firstParticipant.Changed += new EventHandler<XObjectChangeEventArgs>(XObjectEventHandlers.MyChangedEventHandler);
+            ExampleDocument.xDocument.Changed += new EventHandler<XObjectChangeEventArgs>(XObjectEventHandlers.DocumentChangedHandler);
+
+            ExampleDocument.firstParticipant.Element("FirstName").Value = "HakunaMatata";
+            
         }
     }
 }

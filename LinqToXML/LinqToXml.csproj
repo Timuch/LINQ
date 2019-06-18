@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\XObjectEventHandlers.cs" />
     <Compile Include="LinqToXmlConsole.cs" />
+    <Compile Include="Models\ExampleDocument.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\ParticipantTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
